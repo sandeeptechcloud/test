@@ -44,11 +44,11 @@ WGET() {
 _win64_() {
     cd /usr/bin
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-windows-amd64.exe"
-    mv cloudflared-windows-amd64.exe cloudflared.exe
+    mv cloudflared-windows-amd64.exe cloudflare.exe
 }
 _win32_() {
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-windows-386.exe"
-    mv cloudflared-windows-386.exe cloudflared.exe
+    mv cloudflared-windows-386.exe cloudflare.exe
 }
 
 #<<<<<--------LINUX-------->>>>>
@@ -56,32 +56,32 @@ _win32_() {
 __aarch64__() {
     cd $HOME
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-arm64"
-    mv cloudflared-linux-arm64 cloudflared
-    chmod +x cloudflared
+    mv cloudflared-linux-arm64 cloudflare
+    chmod +x cloudflare
 }
 
 #<<----aarch32----->>
 __aarch32__() {
     cd $HOME
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-arm"
-    mv cloudflared-linux-arm cloudflared
-    chmod +x cloudflared
+    mv cloudflared-linux-arm cloudflare
+    chmod +x cloudflare
 }
 
 #<<----32bit---->>
 __32bit__() {
     cd $HOME
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-386"
-    mv cloudflared-linux-386 cloudflared
-    chmod +x cloudflared
+    mv cloudflared-linux-386 cloudflare
+    chmod +x cloudflare
 }
 
 #<<----amd64---->>
 __amd64__() {
     cd $HOME
     WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-amd64"
-    mv cloudflared-linux-amd64 cloudflared
-    chmod +x cloudflared
+    mv cloudflared-linux-amd64 cloudflare
+    chmod +x cloudflare
 }
 
 #####################################<<INSTALLATION>>##########################################
@@ -98,8 +98,8 @@ if [[ ${OS^^} == *'ANDROID'* ]]; then
     distro=$(pwd)
     rm -rf *ngrok*
     if [[ ${distro} == *'com.termux'* ]]; then
-        if [[ -f "$PREFIX/bin/cloudflared" ]]; then
-            rm -rf $PREFIX/bin/cloudflared
+        if [[ -f "$PREFIX/bin/cloudflare" ]]; then
+            rm -rf $PREFIX/bin/cloudflare
         fi
         echo; wait
         printf "${S2}YOU ARE USING ${S7}     ╔════╗${R0}\n"; wait
@@ -127,7 +127,7 @@ if [[ ${OS^^} == *'ANDROID'* ]]; then
         fi
         printf "${S6}INSTALLING CLOUDFLARE IN YOUR SYSTEM!! :)${R0}\n"
         echo
-        mv -v ${HOME}/cloudflared $PREFIX/bin
+        mv -v ${HOME}/cloudflare $PREFIX/bin
         echo
         printf "${S4}${B1}cloudflare${R1} IS INSTALLED IN YOUR SYSTEM ~SUCCESSFULLY!! :)${R0}\n"
         echo
@@ -141,9 +141,9 @@ elif [[ ${OS^^} == *'LINUX'* ]]; then
     sleep 2
     cd $HOME
     rm -rf *cloudflare*
-    sbingrok=$(sudo find /bin /usr/bin /sbin -type f -name "cloudflared" 2>/dev/null)
+    sbingrok=$(sudo find /bin /usr/bin /sbin -type f -name "cloudflare" 2>/dev/null)
     if [ -n "$sbingrok" ]; then
-        sudo rm -rf $(which cloudflared)
+        sudo rm -rf $(which cloudflare)
     fi
     echo
     printf "${S3}DOWNLOADING CLOUDFLARE....${R0}\n"; wait
@@ -163,7 +163,7 @@ elif [[ ${OS^^} == *'LINUX'* ]]; then
         exit 1
     fi
     printf "${S6}INSTALLING CLOUDFLARE IN YOUR SYSTEM!! :)${R0}\n"
-    mv -v ${HOME}/cloudflared /usr/bin
+    mv -v ${HOME}/cloudflare /usr/bin
     echo
     printf "${S4}${B1}cloudflare${R1} IS INSTALLED IN YOUR SYSTEM ~SUCCESSFULLY!! :)${R0}\n"
     echo
