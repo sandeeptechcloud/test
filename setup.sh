@@ -1,6 +1,5 @@
 #!/bin/bash
-
-#<<<----------Colour substitution by variables---------->>>
+#<<<----------colour substitution by variables---------->>>
 B0="$(printf '\033[100m')" S0="$(printf '\033[30m')"
 B1="$(printf '\033[101m')" S1="$(printf '\033[31m')"
 B2="$(printf '\033[102m')" S2="$(printf '\033[32m')"
@@ -10,165 +9,123 @@ B5="$(printf '\033[105m')" S5="$(printf '\033[35m')"
 B6="$(printf '\033[106m')" S6="$(printf '\033[36m')"
 B7="$(printf '\033[107m')" S7="$(printf '\033[37m')"
 R1="$(printf '\033[0;1m')" R0="$(printf '\033[00m')"
-
 #<<<----------BANNER--------->>>
 echo
 wait() {
-    sleep 0.02
+  sleep 0.02
 }
-
 printf "${S7}╔═══╦╗        ╔╗╔═╦╗${R0}\n"; wait
 printf "${S6}║╔═╗║║        ║║║╔╣║${R0}\n"; wait
 printf "${S2}║║ ╚╣║╔══╦╗╔╦═╝╠╝╚╣║╔══╦═╦══╗${R0}\n"; wait
 printf "${S2}║║ ╔╣║║╔╗║║║║╔╗╠╗╔╣║║╔╗║╔╣║═╣${R0}\n"; wait
-printf "${S3}║╚═╝║╚╣╚╝║╚╝║╚╝║║║║╚╣╔╗║║║║═╣${R0}\n"; wait
+printf "${S3}║╚═╝║╚╣╚╝║╚╝║╚╝║║║║╚╣╔╗║║║║═╣${Rp}\n"; wait
 printf "${S1}╚═══╩═╩══╩══╩══╝╚╝╚═╩╝╚╩╝╚══╝${R0}${B5}${S2} INSTALLER ${R0}${R1}\n"; wait
 echo; wait
-printf "${S1}Authored by:- Sandeep Tech ~SANDEEP${R0}\n"; wait
+printf "${S1}Authored by:- Suman Kumar ~BHUTUU${R0}\n"; wait
 echo
 sleep 3
-
 #<<----Downloader function---->>#
 WGET() {
-    while true; do
-        wget -q $1
-        if [ "$?" -eq 0 ]; then
-            break
-        else
-            printf "\n${S2}Check your Internet connection${R0}\n\n"
-        fi
-    done
+  while true; do
+    wget $1
+    if [ "$?" == '0' ]; then
+      break
+    else
+      printf "\n${S2}Check your Internet connection${R0}\n\n"
+    fi
+  done
 }
-
-#<<<<<--------WINDOWS------>>>>>
-_win64_() {
-    cd /usr/bin
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-windows-amd64.exe"
-    mv cloudflared-windows-amd64.exe cloudflare.exe
-}
-_win32_() {
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-windows-386.exe"
-    mv cloudflared-windows-386.exe cloudflare.exe
-}
-
-#<<<<<--------LINUX-------->>>>>
-#<<----aarch64---->>
+#<<<<<--------LINUX/TERMUX-------->>>>>
 __aarch64__() {
-    cd $HOME
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-arm64"
-    mv cloudflared-linux-arm64 cloudflare
-    chmod +x cloudflare
+  cd $HOME
+  WGET "https://github.com/cloudflare/cloudflared/releases/download/2021.10.3/cloudflared-linux-arm64"
+  mv cloudflared-linux-arm64 cloudflared
+  chmod +x cloudflared
 }
-
-#<<----aarch32----->>
 __aarch32__() {
-    cd $HOME
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-arm"
-    mv cloudflared-linux-arm cloudflare
-    chmod +x cloudflare
+  cd $HOME
+  WGET "https://github.com/cloudflare/cloudflared/releases/download/2021.10.3/cloudflared-linux-arm"
+  mv cloudflared-linux-arm cloudflared
+  chmod +x cloudflared
 }
-
-#<<----32bit---->>
 __32bit__() {
-    cd $HOME
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-386"
-    mv cloudflared-linux-386 cloudflare
-    chmod +x cloudflare
+  cd $HOME
+  WGET "https://github.com/cloudflare/cloudflared/releases/download/2021.10.3/cloudflared-linux-386"
+  mv cloudflared-linux-386 cloudflared
+  chmod +x cloudflared
 }
-
-#<<----amd64---->>
 __amd64__() {
-    cd $HOME
-    WGET "https://github.com/cloudflare/cloudflared/releases/download/2024.12.2/cloudflared-linux-amd64"
-    mv cloudflared-linux-amd64 cloudflare
-    chmod +x cloudflare
+  cd $HOME
+  WGET "https://github.com/cloudflare/cloudflared/releases/download/2021.10.3/cloudflared-linux-amd64"
+  mv cloudflared-linux-amd64 cloudflared
+  chmod +x cloudflared
 }
-
 #####################################<<INSTALLATION>>##########################################
-
 OS=$(uname -o)
 archit=$(uname -m)
-
-#<<<----------ANDROID---------->>>
-if [[ ${OS^^} == *'ANDROID'* ]]; then
-    apt update && apt upgrade -y
-    apt install git wget curl findutils proot unzip -y
-    sleep 2
-    cd $HOME
-    distro=$(pwd)
-    rm -rf *ngrok*
-    if [[ ${distro} == *'com.termux'* ]]; then
-        if [[ -f "$PREFIX/bin/cloudflare" ]]; then
-            rm -rf $PREFIX/bin/cloudflare
-        fi
-        echo; wait
-        printf "${S2}YOU ARE USING ${S7}     ╔════╗${R0}\n"; wait
-        printf "                   ${S3}║╔╗╔╗║${R0}\n"; wait
-        printf "                   ${S3}╚╝║║╠╩═╦═╦╗╔╦╗╔╦╗╔╗${R0}\n"; wait
-        printf "                   ${S2}  ║║║║═╣╔╣╚╝║║║╠╬╬╝${R0}\n"; wait
-        printf "                   ${S6}  ║║║║═╣║║║║║╚╝╠╬╬╗${R0}\n"; wait
-        printf "                   ${S1}  ╚╝╚══╩╝╚╩╩╩══╩╝╚╝ !! :)${R0}\n"; wait
-        echo; wait
-        printf "${S3}DOWNLOADING CLOUDFLARE....${R0}\n"; wait
-        echo
-        if [[ ${archit^^} == *'AARCH64'* || ${archit^^} == *'ARMV8'* ]]; then
-            __aarch64__
-        elif [[ ${archit^^} == *'AARCH32'* || ${archit^^} == *'ARMV7'* ]]; then
-            __aarch32__
-        elif [[ ${archit^^} == *'386'* || ${archit^^} == 'X86' || ${archit^^} == *'686'* || ${archit^^} == *'X86_32'* || ${archit^^} == 'AMD' ]]; then
-            __32bit__
-        elif [[ ${archit^^} == *'X86_64'* || ${archit^^} == *'AMD64'* ]]; then
-            __amd64__
-        else
-            echo
-            printf "${S5}THIS INSTALLER IS NOT FOR YOUR SYSTEM! PLEASE INSTALL ${B3}cloudflare${R1} MANUALLY!!${R0}\n"
-            echo
-            exit 1
-        fi
-        printf "${S6}INSTALLING CLOUDFLARE IN YOUR SYSTEM!! :)${R0}\n"
-        echo
-        mv -v ${HOME}/cloudflare $PREFIX/bin
-        echo
-        printf "${S4}${B1}cloudflare${R1} IS INSTALLED IN YOUR SYSTEM ~SUCCESSFULLY!! :)${R0}\n"
-        echo
-    fi
+#<<<----------ANDROID/TERMUX---------->>>
+if [[ ${OS^^} == *'ANDROID'* || ${OS^^} == *'TERMUX'* ]]; then
+  # Install necessary packages in Termux
+  pkg update && pkg upgrade -y
+  pkg install git wget curl findutils proot unzip -y
+  sleep 2
+  cd $HOME
+  rm -rf *cloudflare*
+  
+  if [[ ${archit^^} == *'AARCH64'* || ${archit^^} == *'ARMV8'* ]]; then
+    __aarch64__
+  elif [[ ${archit^^} == *'AARCH32'* || ${archit^^} == *'ARMV7'* ]]; then
+    __aarch32__
+  elif [[ ${archit^^} == *'386'* || ${archit^^} == 'X86' || ${archit^^} == *'686'* || ${archit^^} == *'X86_32'* || ${archit^^} == 'AMD' ]]; then
+    __32bit__
+  elif [[ ${archit^^} == *'X86_64'* || ${archit^^} == *'AMD64'* ]]; then
+    __amd64__
+  else
+    printf "${S5}This installer is not for your system! Please install Cloudflare manually.${R0}\n"
+    exit 1
+  fi
+  
+  # Install cloudflared
+  mv -v ${HOME}/cloudflared $PREFIX/bin
+  printf "${S4}${B1}cloudflare${R1} is installed in your system successfully!${R0}\n"
 fi
 
-#<<<----------LINUX---------->>>
-elif [[ ${OS^^} == *'LINUX'* ]]; then
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install git wget curl findutils unzip -y
-    sleep 2
-    cd $HOME
-    rm -rf *cloudflare*
-    sbingrok=$(sudo find /bin /usr/bin /sbin -type f -name "cloudflare" 2>/dev/null)
-    if [ -n "$sbingrok" ]; then
-        sudo rm -rf $(which cloudflare)
-    fi
-    echo
-    printf "${S3}DOWNLOADING CLOUDFLARE....${R0}\n"; wait
-    echo
-    if [[ ${archit^^} == *'AARCH64'* || ${archit^^} == *'ARMV8'* ]]; then
-        __aarch64__
-    elif [[ ${archit^^} == *'AARCH32'* || ${archit^^} == *'ARMV7'* ]]; then
-        __aarch32__
-    elif [[ ${archit^^} == *'386'* || ${archit^^} == 'X86' || ${archit^^} == *'686'* || ${archit^^} == *'X86_32'* || ${archit^^} == 'AMD' ]]; then
-        __32bit__
-    elif [[ ${archit^^} == *'X86_64'* || ${archit^^} == *'AMD64'* ]]; then
-        __amd64__
-    else
-        echo
-        printf "${S5}THIS INSTALLER IS NOT FOR YOUR SYSTEM! PLEASE INSTALL ${B3}cloudflare${R1} MANUALLY!!${R0}\n"
-        echo
-        exit 1
-    fi
-    printf "${S6}INSTALLING CLOUDFLARE IN YOUR SYSTEM!! :)${R0}\n"
-    mv -v ${HOME}/cloudflare /usr/bin
-    echo
-    printf "${S4}${B1}cloudflare${R1} IS INSTALLED IN YOUR SYSTEM ~SUCCESSFULLY!! :)${R0}\n"
-    echo
-fi
+#<<<----------WINDOWS/MSYS---------->>>
+elif [[ ${OS^^} == *'MSYS'* || ${OS^^} == *'WINDOWS'* ]]; then
+  PREFIX="/usr"
+  adminPerm=$(net user administrator | grep active | awk '{print $NF}')
+  case ${adminPerm,,} in
+    yes) opposite="no";;
+    no) opposite="yes";;
+    *) printf "Not possible to run this\n"; exit 1;;
+  esac
+  net user administrator /active:${opposite} >/dev/null 2>&1
+  adminPerm=$(net user administrator | grep active | awk '{print $NF}')
+  if [[ ${adminPerm,,} != "${opposite}" ]]; then
+    printf "${S2}[${S1}!${S2}]${S4}Run this command prompt or shell in Administrator mode${R0}\n"
+    exit 1
+  fi
 
-#<<<--------EXIT-------->>>#
-wait
-exit
+  echo; wait
+  echo; wait
+  echo -e "${S2}YOU ARE USING: ${R0}\n"; wait
+  printf "${S7}██████          ██████ ██████████ ██████          ██████ ████████████   ██████████████ ██████          ██████ ██████████████ ${R0}\n"; wait
+  printf "${S7}██░░██          ██░░██ ██░░░░░░██ ██░░██████████  ██░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██          ██░░██ ██░░░░░░░░░░██ ${R0}\n"; wait
+  printf "${S3}██░░██          ██░░██ ████░░████ ██░░░░░░░░░░██  ██░░██ ██░░████░░░░██ ██░░██████░░██ ██░░██          ██░░██ ██░░██████████ ${R0}\n"; wait
+  printf "${S3}██░░██          ██░░██   ██░░██   ██░░██████░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██          ██░░██ ██░░██         ${R0}\n"; wait
+  printf "${S3}██░░██  ██████  ██░░██   ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██████  ██░░██ ██░░██████████ ${R0}\n"; wait
+  printf "${S2}██░░██  ██░░██  ██░░██   ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██░░░░░░░░░░██ ${R0}\n"; wait
+  printf "${S2}██░░██  ██░░██  ██░░██   ██░░██   ██░░██  ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██  ██░░██  ██░░██ ██████████░░██ ${R0}\n"; wait
+  printf "${S2}██░░██████░░██████░░██   ██░░██   ██░░██  ██░░██████░░██ ██░░██  ██░░██ ██░░██  ██░░██ ██░░██████░░██████░░██         ██░░██ ${R0}\n"; wait
+  printf "${S6}██░░░░░░░░░░░░░░░░░░██ ████░░████ ██░░██  ██░░░░░░░░░░██ ██░░████░░░░██ ██░░██████░░██ ██░░░░░░░░░░░░░░░░░░██ ██████████░░██ ${R0}\n"; wait
+  printf "${S6}██░░██████░░██████░░██ ██░░░░░░██ ██░░██  ██████████░░██ ██░░░░░░░░████ ██░░░░░░░░░░██ ██░░██████░░██████░░██ ██░░░░░░░░░░██ ${R0}\n"; wait
+  printf "${S1}██████  ██████  ██████ ██████████ ██████          ██████ ████████████   ██████████████ ██████  ██████  ██████ ██████████████${R0}\n\n";wait
+
+  printf "${S3}DOWNLOADING CLOUDFLARE....${R0}\n"
+  if [[ ${archit^^} == *'X86_64'* || ${archit^^} == *'AMD64'* ]]; then
+    _win64_
+    mv -v cloudflared.exe /usr/bin
+    printf "\n${S4}${B1}Cloudflared installer finished!${R0}\n"
+  fi
+  exit
+fi
